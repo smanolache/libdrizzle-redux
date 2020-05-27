@@ -1192,6 +1192,7 @@ drizzle_return_t drizzle_state_connect(drizzle_st *con)
     }
 #ifdef USE_OPENSSL
     if (con->ssl_context) {
+            con->ssl_state = DRIZZLE_SSL_STATE_NONE;
             con->ssl = SSL_new(con->ssl_context);
             if (NULL == con->ssl) {
                     drizzle_set_error(con, __FILE_LINE_FUNC__,
@@ -1236,6 +1237,7 @@ drizzle_return_t drizzle_state_connecting(drizzle_st *con)
         /* Successful connection! */
         con->addrinfo_next= NULL;
         if (con->ssl_context) {
+                con->ssl_state = DRIZZLE_SSL_STATE_NONE;
                 con->ssl = SSL_new(con->ssl_context);
                 if (NULL == con->ssl) {
                         drizzle_set_error(con, __FILE_LINE_FUNC__, "Could not "
